@@ -1,9 +1,13 @@
-// Centralized API URL for frontend. Prefer explicit VITE_API_URL in production.
-const API_URL = import.meta.env.VITE_API_URL || "/api";
+// Centralized API URL for frontend
+
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "https://smart-ecommerce-platform-production.up.railway.app/api";
 
 if (!import.meta.env.VITE_API_URL) {
-	// runtime fallback; keep app running but log helpful hint
-	console.warn("⚠️ VITE_API_URL not set. Using relative '/api' fallback. Set VITE_API_URL for production deployments.");
+  console.warn(
+    "⚠️ VITE_API_URL not found. Using Railway production API."
+  );
 }
 
 export default API_URL;
