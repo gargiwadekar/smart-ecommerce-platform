@@ -27,7 +27,7 @@ function Category() {
         category: product.category.charAt(0).toUpperCase() + product.category.slice(1).toLowerCase()
       };
 
-      const res = await fetch(`${API_URL}/products/watch`, {
+      const res = await fetch(`${API_URL}/api/products/watch`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(trackData)

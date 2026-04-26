@@ -20,10 +20,14 @@ function Login({ adminOnly = false }) {
     setRole(adminOnly ? "admin" : "customer");
     setMessage("");
     setType("");
-    // Clear browser autofill
-    document.querySelectorAll('input[type="email"], input[type="password"]').forEach(input => {
-      input.value = "";
-    });
+
+    document
+      .querySelectorAll(
+        'input[type="email"], input[type="password"]'
+      )
+      .forEach((input) => {
+        input.value = "";
+      });
   }, [adminOnly]);
 
   const handleLogin = async (e) => {
@@ -36,12 +40,13 @@ function Login({ adminOnly = false }) {
     }
 
     try {
-      const res = await fetch(`${API_URL}/auth/login`, {
+      // ✅ FIXED API ROUTE
+      const res = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password, role })
+        body: JSON.stringify({ email, password, role }),
       });
 
       const data = await res.json();
@@ -75,23 +80,29 @@ function Login({ adminOnly = false }) {
         <h1 className="brand">SmartCart</h1>
         <p className="tagline">Shop Smart. Live Better.</p>
 
-        {/* MESSAGE */}
         {message && (
           <div className={`auth-message ${type}`}>
             {message}
           </div>
         )}
 
-        {/* ROLE INFO (no visible role select for users) */}
-        <div className="input-box select-box" style={{ marginBottom: "5px" }}>
-          <p style={{ color: "#fff", margin: 0, fontSize: "14px", textAlign: "left" }}>
+        <div
+          className="input-box select-box"
+          style={{ marginBottom: "5px" }}
+        >
+          <p
+            style={{
+              color: "#fff",
+              margin: 0,
+              fontSize: "14px",
+              textAlign: "left",
+            }}
+          >
             {adminOnly ? "Admin Login" : "Customer Login"}
           </p>
         </div>
 
         <form onSubmit={handleLogin} autoComplete="off">
-
-          {/* EMAIL */}
           <div className="input-box">
             <input
               type="email"
@@ -104,7 +115,6 @@ function Login({ adminOnly = false }) {
             <label>Email Address</label>
           </div>
 
-          {/* PASSWORD */}
           <div className="input-box">
             <input
               type="password"
@@ -117,7 +127,6 @@ function Login({ adminOnly = false }) {
             <label>Password</label>
           </div>
 
-          {/* BUTTON */}
           <button type="submit" className="login-button">
             Login
           </button>
@@ -125,15 +134,32 @@ function Login({ adminOnly = false }) {
 
         {!adminOnly ? (
           <div className="bottom-text">
-            Don't have an account? <span onClick={() => navigate("/register")}>Register</span>
+            Don't have an account?{" "}
+            <span onClick={() => navigate("/register")}>
+              Register
+            </span>
           </div>
         ) : (
           <>
             <div className="bottom-text">
-              Admin registration? <span onClick={() => navigate("/admin-register")}>Register as Admin</span>
+              Admin registration?{" "}
+              <span
+                onClick={() =>
+                  navigate("/admin-register")
+                }
+              >
+                Register as Admin
+              </span>
             </div>
-            <div className="bottom-text" style={{ marginTop: "8px" }}>
-              Customer login? <span onClick={() => navigate("/login")}>Click here</span>
+
+            <div
+              className="bottom-text"
+              style={{ marginTop: "8px" }}
+            >
+              Customer login?{" "}
+              <span onClick={() => navigate("/login")}>
+                Click here
+              </span>
             </div>
           </>
         )}
